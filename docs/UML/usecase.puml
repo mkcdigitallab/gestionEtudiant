@@ -1,0 +1,145 @@
+@startuml
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Chargé de Vente" as Vente
+actor "Chargé de Stock" as Stock
+actor "Administrateur" as Admin
+
+rectangle "StoreManager Pro" {
+
+    usecase "Se connecter" as Login
+    usecase "Se déconnecter" as Logout
+
+    ' ==========================
+    ' VENTES
+    ' ==========================
+
+    usecase "Gérer les ventes" as GestionVente
+    usecase "Enregistrer une vente" as NouvelleVente
+    usecase "Sélectionner un client" as SelectClient
+    usecase "Sélectionner un produit" as SelectProduit
+    usecase "Calculer le total" as CalculTotal
+    usecase "Valider la vente" as ValiderVente
+    usecase "Vente comptant" as Comptant
+    usecase "Vente à crédit" as Credit
+
+    ' ==========================
+    ' DETTES
+    ' ==========================
+
+    usecase "Gérer les dettes" as GestionDette
+    usecase "Consulter les dettes" as ConsulterDette
+    usecase "Enregistrer un paiement" as Paiement
+    usecase "Consulter les paiements" as ConsulterPaiement
+
+    ' ==========================
+    ' STOCK
+    ' ==========================
+
+    usecase "Gérer le stock" as GestionStock
+    usecase "Consulter le stock" as ConsulterStock
+    usecase "Détecter les ruptures" as Rupture
+    usecase "Détecter les stocks critiques" as StockCritique
+
+    ' ==========================
+    ' APPROVISIONNEMENTS
+    ' ==========================
+
+    usecase "Gérer les approvisionnements" as GestionAppro
+    usecase "Créer un approvisionnement" as NouvelleAppro
+    usecase "Sélectionner un fournisseur" as SelectFournisseur
+    usecase "Réceptionner un approvisionnement" as Reception
+
+    ' ==========================
+    ' PRODUITS / TIERS
+    ' ==========================
+
+    usecase "Gérer les produits" as GestionProduit
+    usecase "Ajouter un produit" as AjouterProduit
+    usecase "Modifier un produit" as ModifierProduit
+    usecase "Consulter les produits" as ConsulterProduit
+
+    usecase "Gérer les clients" as GestionClient
+    usecase "Gérer les fournisseurs" as GestionFournisseur
+}
+
+' ==================================================
+' AUTHENTIFICATION
+' ==================================================
+
+Vente --> Login
+Stock --> Login
+Admin --> Login
+
+Vente --> Logout
+Stock --> Logout
+Admin --> Logout
+
+' ==================================================
+' CHARGÉ DE VENTE
+' ==================================================
+
+Vente --> GestionVente
+Vente --> GestionDette
+Vente --> GestionClient
+
+GestionVente --> NouvelleVente : <<include>>
+
+NouvelleVente --> SelectProduit : <<include>>
+NouvelleVente --> CalculTotal : <<include>>
+NouvelleVente --> ValiderVente : <<include>>
+
+SelectClient ..> NouvelleVente : <<extend>>
+
+Comptant ..> NouvelleVente : <<extend>>
+Credit ..> NouvelleVente : <<extend>>
+
+Credit --> GestionDette : <<include>>
+
+GestionDette --> ConsulterDette : <<include>>
+GestionDette --> Paiement : <<include>>
+GestionDette --> ConsulterPaiement : <<include>>
+
+Paiement --> ConsulterDette : <<include>>
+
+' ==================================================
+' CHARGÉ DE STOCK
+' ==================================================
+
+Stock --> GestionStock
+Stock --> GestionAppro
+Stock --> GestionProduit
+Stock --> GestionFournisseur
+
+GestionStock --> ConsulterStock : <<include>>
+
+Rupture ..> GestionStock : <<extend>>
+StockCritique ..> GestionStock : <<extend>>
+
+GestionAppro --> NouvelleAppro : <<include>>
+GestionAppro --> Reception : <<include>>
+
+NouvelleAppro --> SelectFournisseur : <<include>>
+
+Reception --> GestionStock : <<include>>
+
+' ==================================================
+' ADMINISTRATEUR
+' ==================================================
+
+Admin --> GestionProduit
+Admin --> GestionClient
+Admin --> GestionFournisseur
+Admin --> GestionStock
+Admin --> GestionAppro
+Admin --> GestionVente
+Admin --> GestionDette
+
+GestionProduit --> AjouterProduit : <<include>>
+GestionProduit --> ModifierProduit : <<include>>
+GestionProduit --> ConsulterProduit : <<include>>
+
+@enduml
