@@ -1,1 +1,0 @@
-<h1>Ventes - Liste</h1>
