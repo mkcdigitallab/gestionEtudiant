@@ -2,7 +2,6 @@
 
 class Eleves
 {
-    private ?int $id = null;
     private ?string $nom = null;
     private ?string $prenom = null;
     private ?string $matricule = null;
@@ -11,9 +10,8 @@ class Eleves
     private ?int $statut_id = null;
     private ?int $classe_id = null;
 
-    public function __construct(?int $id = null, ?string $nom = null, ?string $prenom = null, ?string $matricule = null, ?string $etablissement = null, ?int $responsable_id = null, ?int $statut_id = null, ?int $classe_id = null)
+    public function __construct(?string $nom = null, ?string $prenom = null, ?string $matricule = null, ?string $etablissement = null, ?int $responsable_id = null, ?int $statut_id = null, ?int $classe_id = null)
     {
-        $this->id = $id;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->matricule = $matricule;
@@ -21,11 +19,6 @@ class Eleves
         $this->responsable_id = $responsable_id;
         $this->statut_id = $statut_id;
         $this->classe_id = $classe_id;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getNom(): ?string

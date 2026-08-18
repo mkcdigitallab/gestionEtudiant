@@ -2,7 +2,6 @@
 
 class utilisateurs
 {
-    private ?int $id = null;
     private ?string $nom = null;
     private ?string $prenom = null;
     private ?string $telephone = null;
@@ -10,20 +9,14 @@ class utilisateurs
     private ?int $role_id = null;
     private ?string $password = null;
 
-    public function __construct(?int $id = null, ?string $nom = null, ?string $prenom = null, ?string $telephone = null, ?string $email = null, ?int $role_id = null, ?string $password = null)
+    public function __construct(?string $nom = null, ?string $prenom = null, ?string $telephone = null, ?string $email = null, ?int $role_id = null, ?string $password = null)
     {
-        $this->id = $id;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->telephone = $telephone;
         $this->email = $email;
         $this->role_id = $role_id;
         $this->password = $password;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getNom(): ?string

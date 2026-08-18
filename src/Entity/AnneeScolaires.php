@@ -2,22 +2,15 @@
 
 class AnneeScolaires
 {
-    private ?int $id = null;
     private ?string $nom = null;
     private ?string $date = null;
     private ?int $actif = null;
 
-    public function __construct(?int $id = null, ?string $nom = null, ?string $date = null, ?int $actif = null)
+    public function __construct(?string $nom = null, ?string $date = null, ?int $actif = null)
     {
-        $this->id = $id;
         $this->nom = $nom;
         $this->date = $date;
         $this->actif = $actif;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getNom(): ?string
